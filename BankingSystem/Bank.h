@@ -17,7 +17,11 @@ class Bank
     void addAccount(const BankAccount &toAdd);
     const BankAccount &extractAccount(unsigned id);
     const MyVector<BankAccount> &getAccounts() const;
-    void addEmployee(SharedPtr<Employee> em);
+    void addEmployee(const SharedPtr<Employee> &em);
+    ~Bank()
+    {
+        std::cout << "deleted bank " << name << std::endl;
+    }
 
   private:
     MyString name;

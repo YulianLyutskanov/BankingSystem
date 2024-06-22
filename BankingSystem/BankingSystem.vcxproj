@@ -131,9 +131,11 @@
     <ClCompile Include="BankAccount.cpp" />
     <ClCompile Include="BankingSystem.cpp" />
     <ClCompile Include="ChangeCommand.cpp" />
+    <ClCompile Include="Check.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="CloseCommand.cpp" />
     <ClCompile Include="Employee.cpp" />
+    <ClCompile Include="IdGenerator.cpp" />
     <ClCompile Include="MyString.cpp" />
     <ClCompile Include="OpenCommand.cpp" />
     <ClCompile Include="System.cpp" />
@@ -143,6 +145,7 @@
   <ItemGroup>
     <ClInclude Include="Bank.h" />
     <ClInclude Include="BankAccount.h" />
+    <ClInclude Include="Check.h" />
     <ClInclude Include="Commands\ChangeCommand.h" />
     <ClInclude Include="Commands\CloseCommand.h" />
     <ClInclude Include="Commands\Command.h" />
@@ -150,6 +153,7 @@
     <ClInclude Include="Containers\MyQueue.hpp" />
     <ClInclude Include="Containers\MyStack.hpp" />
     <ClInclude Include="Containers\MyVector.hpp" />
+    <ClInclude Include="IdGenerator.h" />
     <ClInclude Include="MyString.h" />
     <ClInclude Include="SmartPointers\Polymorfic_Ptr.hpp" />
     <ClInclude Include="SmartPointers\SharedPtr.hpp" />

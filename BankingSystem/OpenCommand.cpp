@@ -1,4 +1,6 @@
 #include "Commands/OpenCommand.h"
+#include "IdGenerator.h"
+
 #pragma warning(disable : 4996)
 
 OpenCommand::OpenCommand(const SharedPtr<User> &accountHolder, const MyString &bankName)
@@ -8,11 +10,11 @@ OpenCommand::OpenCommand(const SharedPtr<User> &accountHolder, const MyString &b
 
 void OpenCommand::execute()
 {
-    /*radndom num */
-    System::getInstance().getBank(bankName).addAccount(BankAccount(/*radndom num */ 1, 0.f, accountHolder));
+    unsigned newId = IdGenerator::getInstance().getUniqueId();
+
+    System::getInstance().getBank(bankName).addAccount(BankAccount(newId, 0.f, accountHolder));
     char buff[15];
-    MyString messege("You opened an account in " + bankName + "!" + "Your account id is " +
-                     itoa(/*radndom num */ 1, buff, 10));
+    MyString messege("You opened an account in " + bankName + "!" + "Your account id is " + itoa(newId, buff, 10));
 
     accountHolder->addMessage(messege);
 }

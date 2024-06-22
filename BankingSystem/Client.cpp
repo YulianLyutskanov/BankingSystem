@@ -14,6 +14,7 @@ void Client::help() const
     std::cout << "change [new_bank_name] [current_bank_name] [account_number] - Transfer the account in another bank\n";
     std::cout << "list [bank_name] - View all of your available saving accounts in this bank\n";
     std::cout << "messages - Displays all messages in chronological order\n";
+    std::cout << "whoami - Display your information\n";
     std::cout << "exit - logout\n";
 }
 
@@ -25,6 +26,16 @@ UserType Client::getType() const
 void Client::check_avl(const MyString &bankName, unsigned accountNumber) const
 {
     std::cout << System::getInstance().getBank(bankName).getBankAccount(accountNumber).getBalance() << '$' << std::endl;
+}
+
+void Client::redeem(const MyString &bankName, unsigned accountNumber, const MyString &verificationCode) const
+{
+    Check c = System::getInstance().findCheck(verificationCode);
+    if (getId() == c.getUserId())
+    {
+        System::getInstance().getBank(bankName).getBankAccount(accountNumber).add(c.getSum());
+        System::getInstance().extractCheck(verificationCode);
+    }
 }
 
 void Client::list(const MyString &bankName) const

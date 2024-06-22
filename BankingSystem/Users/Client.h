@@ -15,7 +15,7 @@ class Client : public User
     void check_avl(const MyString &bankName, unsigned accountNumber) const;
     // void open(const MyString &bankName) const;
     // void close(const MyString &bankName, unsigned accountNumber) const;
-    // void redeem(const MyString &bankName, unsigned accountNumber, const MyString &verificationCode) const;
+    void redeem(const MyString &bankName, unsigned accountNumber, const MyString &verificationCode) const;
     // void change(const MyString &newBankName, const MyString &currentBankName, unsigned accountNumber) const;
     void list(const MyString &bankName) const;
     Client(const MyString &name, const MyString &id, unsigned short age, const MyString &password);

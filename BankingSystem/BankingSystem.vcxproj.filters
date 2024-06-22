@@ -63,6 +63,12 @@
     <ClCompile Include="ChangeCommand.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="IdGenerator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Check.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Containers\MyQueue.hpp">
@@ -81,9 +87,6 @@
       <Filter>Header Files\Users</Filter>
     </ClInclude>
     <ClInclude Include="SmartPointers\Polymorfic_Ptr.hpp">
-      <Filter>Header Files\SmartiPointers</Filter>
-    </ClInclude>
-    <ClInclude Include="SmartPointers\SharedPtr.hpp">
       <Filter>Header Files\SmartiPointers</Filter>
     </ClInclude>
     <ClInclude Include="SmartPointers\UniquePointer.hpp">
@@ -121,6 +124,15 @@
     </ClInclude>
     <ClInclude Include="Commands\ChangeCommand.h">
       <Filter>Header Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="IdGenerator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Check.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SmartPointers\SharedPtr.hpp">
+      <Filter>Header Files\SmartiPointers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

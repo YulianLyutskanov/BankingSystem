@@ -1,4 +1,5 @@
 #include "Commands/ChangeCommand.h"
+#include "IdGenerator.h"
 #pragma warning(disable : 4996)
 
 ChangeCommand::ChangeCommand(const SharedPtr<User> &accountHolder, const MyString &destinationBank,
@@ -19,12 +20,13 @@ void ChangeCommand::execute()
         std::cerr << e.what();
         accountHolder->addMessage("Change failed! The given account data were not valid!");
     }
+    unsigned newId = IdGenerator::getInstance().getUniqueId();
     BankAccount cur = System::getInstance().getBank(initialBank).extractAccount(accountId);
-    cur.setId(/*random num*/ 5);
+    cur.setId(newId);
     System::getInstance().getBank(destinationBank).addAccount(cur);
     char buff[15];
-    accountHolder->addMessage("You changed your savings account to" + destinationBank + ". New account id is " +
-                              itoa(/*random num*/ 5, buff, 10) + ".");
+    accountHolder->addMessage("You changed your savings account to " + destinationBank + ". New account id is " +
+                              itoa(newId, buff, 10) + ".");
 }
 
 void ChangeCommand::cancel()
@@ -49,7 +51,7 @@ void ChangeCommand::details() const
     std::cout << "Bank: " << initialBank << std::endl;
 }
 
-Command* ChangeCommand::clone() const
+Command *ChangeCommand::clone() const
 {
-    return  new ChangeCommand(*this);
+    return new ChangeCommand(*this);
 }

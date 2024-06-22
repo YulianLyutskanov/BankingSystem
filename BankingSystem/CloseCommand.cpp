@@ -20,7 +20,7 @@ void CloseCommand::cancel()
     char buff[1024]{0};
     char buff2[15];
     std::cin.getline(buff, 1024);
-    accountHolder->addMessage("Your Close request for bank " + bankName + "for account with Id " +
+    accountHolder->addMessage("Your Close request for bank " + bankName + " for account with Id " +
                               itoa(accountId, buff2, 10) + " was not approved.  Reason: " + buff + ".");
 }
 
@@ -38,7 +38,7 @@ void CloseCommand::details() const
     System::getInstance().getBank(bankName).getBankAccount(accountId).print();
 }
 
-Command* CloseCommand::clone() const
+Command *CloseCommand::clone() const
 {
     return new CloseCommand(*this);
 }

@@ -9,6 +9,7 @@ class ThirdParty : public User
     void help() const override;
 
     UserType getType() const override;
+    ThirdParty(const MyString &name, const MyString &id, unsigned short age, const MyString &password);
 
     void send_check(double sum, const MyString &verificationCode, const MyString &userId) const;
 

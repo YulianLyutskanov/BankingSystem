@@ -1,5 +1,6 @@
 #pragma once
 #include "Bank.h"
+#include "Check.h"
 #include "Containers/MyVector.hpp"
 #include "MyString.h"
 #include "SmartPointers/Polymorfic_Ptr.hpp"
@@ -18,7 +19,6 @@ class System
   public:
     static System &getInstance();
 
-    System() = default;
     System(const System &other) = delete;
     System &operator=(const System &other) = delete;
 
@@ -28,13 +28,18 @@ class System
     Bank &getBank(const MyString &name);
     SharedPtr<User> &getUser(const MyString &id);
     bool isSomeoneLogged() const;
+    void addCheck(const Check &check);
+    const Check &findCheck(const MyString &code);
+    void extractCheck(const MyString &code);
 
     void run();
 
   private:
     MyVector<Bank> banks;
     MyVector<SharedPtr<User>> users;
+    MyVector<Check> checks;
     SharedPtr<User> loggedUser = nullptr;
 
-    void changeLogged(const SharedPtr<User> &toLog);
+    void changeLogged(SharedPtr<User> toLog);
+    System() = default;
 };

@@ -88,7 +88,7 @@ const MyVector<BankAccount> &Bank::getAccounts() const
     return accounts;
 }
 
-void Bank::addEmployee(SharedPtr<Employee> em)
+void Bank::addEmployee(const SharedPtr<Employee> &em)
 {
     employees.push_back(em);
 }

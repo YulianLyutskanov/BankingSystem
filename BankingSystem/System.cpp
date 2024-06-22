@@ -3,6 +3,7 @@
 #include "Commands/CloseCommand.h"
 #include "Commands/OpenCommand.h"
 #include "Users/Employee.h"
+#include "Users/ThirdParty.h"
 
 System &System::getInstance()
 {
@@ -58,6 +59,35 @@ bool System::isSomeoneLogged() const
     ;
 }
 
+void System::addCheck(const Check &check)
+{
+    checks.push_back(check);
+}
+
+const Check &System::findCheck(const MyString &code)
+{
+    size_t count = checks.size();
+    // if(!count)
+
+    for (size_t i = 0; i < count; i++)
+    {
+        if (checks[i].getCode() == code)
+            return checks[i];
+    }
+}
+
+void System::extractCheck(const MyString &code)
+{
+    size_t count = checks.size();
+    // if(!count)
+
+    for (size_t i = 0; i < count; i++)
+    {
+        if (checks[i].getCode() == code)
+            checks.erase(i);
+    }
+}
+
 void System::run()
 {
     while (true)
@@ -100,7 +130,14 @@ void System::run()
                     std::cout << std::endl << "Password: ";
                     std::cin >> password;
                     newUser = new Employee(name, id, age, password, bank);
-                    getBank(bank).addEmployee(dynamicCast<Employee, User>(newUser));
+                    SharedPtr<Employee> employee(dynamicCast<Employee, User>(newUser));
+                    getBank(bank).addEmployee(employee);
+                }
+                else if (role == "Third-Party")
+                {
+                    std::cout << std::endl << "Password: ";
+                    std::cin >> password;
+                    newUser = new ThirdParty(name, id, age, password);
                 }
                 users.push_back(newUser);
             }
@@ -165,6 +202,14 @@ void System::run()
                 getBank(bankName).getEmployeeWithLeastTasks()->addTask(
                     new CloseCommand(loggedUser, bankName, accountNum));
             }
+            else if (input == "redeem")
+            {
+                MyString bankName;
+                unsigned accountNum;
+                MyString verificationCode;
+                std::cin >> bankName >> accountNum >> verificationCode;
+                dynamicCast<Client, User>(loggedUser)->redeem(bankName, accountNum, verificationCode);
+            }
             else if (input == "change")
             {
                 MyString destBank, curBank;
@@ -172,6 +217,10 @@ void System::run()
                 std::cin >> destBank >> curBank >> accNumber;
                 getBank(destBank).getEmployeeWithLeastTasks()->addTask(
                     new ChangeCommand(loggedUser, destBank, curBank, accNumber));
+            }
+            else if (input == "whoami")
+            {
+                loggedUser->whoami();
             }
             else if (input == "exit")
             {
@@ -204,6 +253,34 @@ void System::run()
                 std::cin >> index;
                 dynamicCast<Employee, User>(loggedUser)->disapprove(index);
             }
+            else if (input == "whoami")
+            {
+                loggedUser->whoami();
+            }
+            else if (input == "exit")
+            {
+                loggedUser->exit();
+            }
+        }
+        else if (loggedUser->getType() == UserType::THIRD_PARTY)
+        {
+            MyString input;
+            std::cin >> input;
+            if (input == "whoami")
+            {
+                loggedUser->whoami();
+            }
+            else if (input == "help")
+            {
+                loggedUser->help();
+            }
+            else if (input == "send_check")
+            {
+                double sum;
+                MyString code, egn;
+                std::cin >> sum >> code >> egn;
+                dynamicCast<ThirdParty, User>(loggedUser)->send_check(sum, code, egn);
+            }
             else if (input == "exit")
             {
                 loggedUser->exit();
@@ -212,7 +289,7 @@ void System::run()
     }
 }
 
-void System::changeLogged(const SharedPtr<User> &toLog)
+void System::changeLogged( SharedPtr<User> toLog)
 {
     loggedUser = toLog;
 }

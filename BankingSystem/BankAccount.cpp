@@ -30,6 +30,11 @@ void BankAccount::setBalance(double newBalance)
     balance = newBalance;
 }
 
+void BankAccount::add(double money)
+{
+    balance += money;
+}
+
 void BankAccount::setUser(User *newUser)
 {
     if (!newUser)

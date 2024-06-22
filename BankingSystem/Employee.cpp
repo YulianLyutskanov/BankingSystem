@@ -5,10 +5,9 @@ unsigned Employee::getWaitingTasksCount() const
     return commands.size();
 }
 
-void Employee::addTask(Command* task)
+void Employee::addTask(Command *task)
 {
     commands.push_back(Polymorphic_Ptr<Command>(task));
-        
 }
 
 Employee::Employee(const MyString &name, const MyString &id, unsigned short age, const MyString &password,
@@ -24,6 +23,12 @@ void Employee::exit() const
 
 void Employee::help() const
 {
+    std::cout << "tasks - shows your tasks" << std::endl;
+    std::cout << "view [task_id] - shows details on the task by index " << std::endl;
+    std::cout << "approve [task_id]" << std::endl;
+    std::cout << "disapprove [task_id] [message]" << std::endl;
+    std::cout << "whoami - Display your information" << std::endl;
+    std::cout << "exit - logout" << std::endl;
 }
 
 UserType Employee::getType() const
