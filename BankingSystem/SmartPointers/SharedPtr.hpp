@@ -35,27 +35,27 @@ template <typename T> class SharedPtr
 {
     template <typename T> friend class WeakPtr;
 
-    T* data;
-    Counter* counter;
+    T *data;
+    Counter *counter;
 
     void free();
-    void copyFrom(const SharedPtr<T>& other);
-    void moveFrom(SharedPtr<T>&& other);
+    void copyFrom(const SharedPtr<T> &other);
+    void moveFrom(SharedPtr<T> &&other);
 
-public:
+  public:
     SharedPtr();
-    SharedPtr(T* data);
+    SharedPtr(T *data);
 
-    SharedPtr(const SharedPtr<T>& other);
-    SharedPtr& operator=(const SharedPtr<T>& other);
+    SharedPtr(const SharedPtr<T> &other);
+    SharedPtr &operator=(const SharedPtr<T> &other);
 
-    SharedPtr(SharedPtr<T>&& other);
-    SharedPtr& operator=(SharedPtr<T>&& other);
+    SharedPtr(SharedPtr<T> &&other);
+    SharedPtr &operator=(SharedPtr<T> &&other);
 
-    const T& operator*() const;
-    T& operator*();
-    const T* operator->() const;
-    T* operator->();
+    const T &operator*() const;
+    T &operator*();
+    const T *operator->() const;
+    T *operator->();
 
     bool isInitlized() const;
 
@@ -78,7 +78,7 @@ template <typename T> void SharedPtr<T>::free()
         delete counter;
 }
 
-template <typename T> void SharedPtr<T>::copyFrom(const SharedPtr<T>& other)
+template <typename T> void SharedPtr<T>::copyFrom(const SharedPtr<T> &other)
 {
     if (!(data = other.data))
     {
@@ -97,7 +97,7 @@ template <typename T> SharedPtr<T>::SharedPtr()
     counter = nullptr;
 }
 
-template <typename T> SharedPtr<T>::SharedPtr(T* data)
+template <typename T> SharedPtr<T>::SharedPtr(T *data)
 {
     this->data = data;
     if (this->data)
@@ -111,12 +111,12 @@ template <typename T> SharedPtr<T>::SharedPtr(T* data)
     }
 }
 
-template <typename T> SharedPtr<T>::SharedPtr(const SharedPtr<T>& other)
+template <typename T> SharedPtr<T>::SharedPtr(const SharedPtr<T> &other)
 {
     copyFrom(other);
 }
 
-template <typename T> void SharedPtr<T>::moveFrom(SharedPtr<T>&& other)
+template <typename T> void SharedPtr<T>::moveFrom(SharedPtr<T> &&other)
 {
     data = other.data;
     other.data = nullptr;
@@ -124,11 +124,11 @@ template <typename T> void SharedPtr<T>::moveFrom(SharedPtr<T>&& other)
     counter = other.counter;
     other.counter = nullptr;
 }
-template <typename T> SharedPtr<T>::SharedPtr(SharedPtr<T>&& other)
+template <typename T> SharedPtr<T>::SharedPtr(SharedPtr<T> &&other)
 {
     moveFrom(std::move(other));
 }
-template <typename T> SharedPtr<T>& SharedPtr<T>::operator=(SharedPtr<T>&& other)
+template <typename T> SharedPtr<T> &SharedPtr<T>::operator=(SharedPtr<T> &&other)
 {
     if (this != &other)
     {
@@ -138,7 +138,7 @@ template <typename T> SharedPtr<T>& SharedPtr<T>::operator=(SharedPtr<T>&& other
     return *this;
 }
 
-template <typename T> SharedPtr<T>& SharedPtr<T>::operator=(const SharedPtr<T>& other)
+template <typename T> SharedPtr<T> &SharedPtr<T>::operator=(const SharedPtr<T> &other)
 {
     if (this != &other)
     {
@@ -148,7 +148,7 @@ template <typename T> SharedPtr<T>& SharedPtr<T>::operator=(const SharedPtr<T>& 
     return *this;
 }
 
-template <typename T> const T& SharedPtr<T>::operator*() const
+template <typename T> const T &SharedPtr<T>::operator*() const
 {
     if (data == nullptr)
     {
@@ -157,7 +157,7 @@ template <typename T> const T& SharedPtr<T>::operator*() const
     return *data;
 }
 
-template <typename T> T& SharedPtr<T>::operator*()
+template <typename T> T &SharedPtr<T>::operator*()
 {
     if (data == nullptr)
     {
@@ -171,12 +171,12 @@ template <typename T> SharedPtr<T>::~SharedPtr()
     free();
 }
 
-template <typename T> T* SharedPtr<T>::operator->()
+template <typename T> T *SharedPtr<T>::operator->()
 {
     return data;
 }
 
-template <typename T> const T* SharedPtr<T>::operator->() const
+template <typename T> const T *SharedPtr<T>::operator->() const
 {
     return data;
 }
@@ -186,7 +186,8 @@ template <typename T> bool SharedPtr<T>::isInitlized() const
     return data != nullptr;
 }
 
-template <typename to, typename from> to* dynamicCast(SharedPtr<from> ptr)
+template <typename to, typename from> to *dynamicCast(SharedPtr<from> ptr)
 {
-    return (dynamic_cast<to*>(ptr.data));
+    ptr.counter->addSharedPtr();
+    return (dynamic_cast<to *>(ptr.data));
 }
