@@ -5,6 +5,18 @@ Bank::Bank(const MyString &name) : name(name)
 {
 }
 
+Bank::Bank(std::istream &is)
+{
+    is >> name;
+    size_t count;
+    is >> count;
+    for (size_t i = 0; i < count; i++)
+    {
+        BankAccount cur(is);
+        accounts.push_back(cur);
+    }
+}
+
 const MyString &Bank::getName() const
 {
     return name;
@@ -91,4 +103,16 @@ const MyVector<BankAccount> &Bank::getAccounts() const
 void Bank::addEmployee(const SharedPtr<Employee> &em)
 {
     employees.push_back(em);
+}
+
+void Bank::serialise(std::ostream &os) const
+{
+    os << name << '\n';
+    size_t count = accounts.size();
+    os << count << '\n';
+    for (size_t i = 0; i < count; i++)
+    {
+        accounts[i].serialise(os);
+        os << '\n';
+    }
 }

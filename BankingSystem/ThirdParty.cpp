@@ -13,6 +13,11 @@ void ThirdParty::help() const
     std::cout << "exit - logout" << std::endl;
 }
 
+void ThirdParty::serialise(std::ostream &os) const
+{
+    os << name << '\n' << id << '\n' << age << '\n' << password << '\n';
+}
+
 UserType ThirdParty::getType() const
 {
     return UserType::THIRD_PARTY;
@@ -21,6 +26,11 @@ UserType ThirdParty::getType() const
 ThirdParty::ThirdParty(const MyString &name, const MyString &id, unsigned short age, const MyString &password)
     : User(name, id, age, password)
 {
+}
+
+ThirdParty::ThirdParty(std::istream& is)
+{
+    is >> name >> id >> age >> password;
 }
 
 void ThirdParty::send_check(double sum, const MyString &verificationCode, const MyString &userId) const

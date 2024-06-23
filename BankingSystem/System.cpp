@@ -5,10 +5,17 @@
 #include "Users/Client.h"
 #include "Users/Employee.h"
 #include "Users/ThirdParty.h"
+#include <fstream>
 
 System &System::getInstance()
 {
     static System instance;
+    static bool areBanksLoaded = false;
+    if (!areBanksLoaded)
+    {
+        areBanksLoaded = true;
+        instance.loadBanks();
+    }
     return instance;
 }
 
@@ -136,6 +143,177 @@ void System::run()
             std::cerr << e.what() << std::endl;
         }
     }
+}
+
+void System::serialiseUsers() const
+{
+    std::ofstream os("Clients.txt");
+    std::ofstream os2("Employees.txt");
+    std::ofstream os3("ThirdParty.txt");
+    if (!os.is_open() || !os2.is_open() || !os3.is_open())
+        throw std::runtime_error("cant load users!");
+
+    size_t clientsCount, employeesCount, thirdPartyCount;
+    countUsersByType(clientsCount, employeesCount, thirdPartyCount);
+
+    os << clientsCount << '\n';
+    os2 << employeesCount << '\n';
+    os3 << thirdPartyCount << '\n';
+
+    size_t count = users.size();
+    for (size_t i = 0; i < count; i++)
+    {
+        switch (users[i]->getType())
+        {
+        case UserType::CLIENT:
+            users[i]->serialise(os);
+            break;
+        case UserType::EMPLOYEE:
+            users[i]->serialise(os2);
+            break;
+        case UserType::THIRD_PARTY:
+            users[i]->serialise(os3);
+            break;
+        default:
+            break;
+        }
+    }
+    os.close();
+    os2.close();
+    os3.close();
+}
+
+void System::serialiseChecks() const
+{
+    std::ofstream os("Checks.txt");
+    if (!os.is_open())
+        throw std::runtime_error("cant load checks!");
+
+    size_t count = checks.size();
+    os << count << '\n';
+    for (size_t i = 0; i < count; i++)
+    {
+        checks[i].serialise(os);
+        os << '\n';
+    }
+    os.close();
+}
+
+void System::serialiseBanks() const
+{
+    std::ofstream os("Banks.txt");
+    if (!os.is_open())
+        throw std::runtime_error("cant load banks!");
+
+    size_t count = banks.size();
+    os << count << '\n';
+    for (size_t i = 0; i < count; i++)
+    {
+        banks[i].serialise(os);
+    }
+    os.close();
+}
+
+void System::serialise() const
+{
+    serialiseUsers();
+    serialiseChecks();
+    serialiseBanks();
+}
+
+void System::loadUsers()
+{
+    std::ifstream ifs("Clients.txt");
+    std::ifstream ifs2("Employees.txt");
+    std::ifstream ifs3("ThirdParty.txt");
+
+    if (!ifs.is_open() || !ifs2.is_open() || !ifs3.is_open())
+        throw std::runtime_error("can't load users!");
+    size_t count;
+
+    ifs >> count;
+    for (size_t i = 0; i < count; i++) // readClients
+    {
+        SharedPtr<User> client = new Client(ifs);
+        users.push_back(client);
+    }
+
+    ifs2 >> count;
+    for (size_t i = 0; i < count; i++) // read Employees
+    {
+        SharedPtr<User> employee = new Employee(ifs2);
+        users.push_back(employee);
+    }
+
+    ifs3 >> count;
+    for (size_t i = 0; i < count; i++) // read ThirdParty
+    {
+        SharedPtr<User> thirdParty = new ThirdParty(ifs3);
+        users.push_back(thirdParty);
+    }
+    ifs.close();
+    ifs2.close();
+    ifs3.close();
+}
+
+void System::loadChecks()
+{
+    std::ifstream ifs("Checks.txt");
+    if (!ifs.is_open())
+        throw std::runtime_error("cant load checks!");
+
+    size_t count;
+    ifs >> count;
+    for (size_t i = 0; i < count; i++)
+    {
+        Check curCheck(ifs);
+        checks.push_back(curCheck);
+    }
+    ifs.close();
+}
+
+void System::loadBanks()
+{
+    std::ifstream ifs("Banks.txt");
+    if (!ifs.is_open())
+        throw std::runtime_error("cant load banks!");
+
+    size_t count;
+    ifs >> count;
+
+    for (size_t i = 0; i < count; i++)
+    {
+        Bank cur(ifs);
+        banks.push_back(cur);
+    }
+
+    // we have to connect the employyes to the banks, that is why we load the employees first
+    count = users.size();
+    for (size_t i = 0; i < count; i++)
+    {
+        if (users[i]->getType() == UserType::EMPLOYEE)
+        {
+            SharedPtr<Employee> employee(dynamicCast<Employee, User>(users[i]));
+            getBank(employee->getAssociatedBank()).addEmployee(employee);
+        }
+    }
+}
+
+void System::loadSystem()
+{
+    loadUsers();
+    loadChecks();
+    // loadBanks();
+}
+
+System::System()
+{
+    loadSystem();
+}
+
+System::~System()
+{
+    serialise();
 }
 
 void System::changeLogged(SharedPtr<User> toLog)
@@ -382,4 +560,27 @@ bool System::isClientIdUnique(const MyString &input)
             return false;
     }
     return true;
+}
+
+void System::countUsersByType(size_t &clientsCount, size_t &employeesCount, size_t &thirdPartyCount) const
+{
+    size_t count = users.size();
+    clientsCount = employeesCount = thirdPartyCount = 0;
+    for (size_t i = 0; i < count; i++)
+    {
+        switch (users[i]->getType())
+        {
+        case UserType::CLIENT:
+            clientsCount++;
+            break;
+        case UserType::EMPLOYEE:
+            employeesCount++;
+            break;
+        case UserType::THIRD_PARTY:
+            thirdPartyCount++;
+            break;
+        default:
+            break;
+        }
+    }
 }

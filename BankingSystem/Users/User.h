@@ -18,12 +18,14 @@ class User
     virtual void exit() const = 0;
     virtual void whoami() const;
     virtual void help() const = 0;
+    virtual void serialise(std::ostream &os) const = 0;
 
     void display() const;
 
     virtual void printMessages() const;
 
     User(const MyString &name, const MyString &id, unsigned short age);
+    User() = default;
 
     const MyString &getName() const;
     const MyString &getId() const;

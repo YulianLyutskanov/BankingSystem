@@ -6,6 +6,7 @@ class BankAccount
   public:
     BankAccount(unsigned id, double balance, SharedPtr<User> user);
     BankAccount() = default;
+    BankAccount(std::istream &is);
 
     unsigned getId() const;
     double getBalance() const;
@@ -16,6 +17,7 @@ class BankAccount
     void add(double money);
     void setUser(User *newUser);
     void print() const;
+    void serialise(std::ostream &os) const;
 
   private:
     unsigned id = 0;

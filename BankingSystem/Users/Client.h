@@ -8,6 +8,7 @@ class Client : public User
   public:
     void exit() const override;
     void help() const override;
+    void serialise(std::ostream &os) const override;
 
     UserType getType() const override;
 
@@ -15,6 +16,7 @@ class Client : public User
     void redeem(const MyString &bankName, unsigned accountNumber, const MyString &verificationCode) const;
     void list(const MyString &bankName) const;
     Client(const MyString &name, const MyString &id, unsigned short age, const MyString &password);
+    Client(std::istream &is);
 
   private:
 };

@@ -32,6 +32,8 @@ class System
 
     void run();
 
+    ~System();
+
   private:
     MyVector<Bank> banks;
     MyVector<SharedPtr<User>> users;
@@ -50,5 +52,19 @@ class System
 
     bool isClientIdUnique(const MyString &input);
 
-    System() = default;
+    void countUsersByType(size_t &clientsCount, size_t &employeesCount, size_t &thirdPartyCount) const;
+
+    void serialiseUsers() const;
+    void serialiseChecks() const;
+    void serialiseBanks() const;
+    // void serialiseLoggedUser() const; the deafult state of the program will be withoiut logged user
+    void serialise() const;
+
+    void loadUsers();
+    void loadChecks();
+    void loadBanks();
+
+    void loadSystem();
+
+    System();
 };

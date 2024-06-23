@@ -1,5 +1,6 @@
 #pragma once
 #include <algorithm>
+#include <iostream>
 #include <stdexcept>
 
 static constexpr size_t INITIAL_CAPACITY = 4;
@@ -37,10 +38,23 @@ template <class T> class MyVector
     bool empty() const noexcept;
     size_t size() const noexcept;
     size_t getCapacity() const noexcept;
+    friend std::ostream &operator<<(std::ostream &os, const MyVector<T> &obj);
 
     const T &operator[](size_t index) const;
     T &operator[](size_t index);
 };
+
+// template <class T> std::ostream &operator<<(std::ostream &os, const MyVector<T> &obj)
+//{
+//     size_t count = obj.size();
+//     for (size_t i = 0; i < count; i++)
+//     {
+//         if (i == count - 1) // dont add newline on last
+//             os << obj[i];
+//         os << obj[i] << '\n';
+//     }
+//     return os;
+// }
 
 static unsigned roundToPowerOfTwo(unsigned v)
 {

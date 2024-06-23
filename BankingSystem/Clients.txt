@@ -1,0 +1,10 @@
+1
+Stancho
+0xxxxxxxx1
+23
+*
+4
+You have a check assigned to you by Plamena
+You opened an account in EntranceInvest!Your account id is 101
+You changed your savings account to Health_Savings_Accounts. New account id is 102.
+Your Close request for bank Health_Savings_Accounts for account with Id 102 was not approved.  Reason:  "Why don't you spend your money?".

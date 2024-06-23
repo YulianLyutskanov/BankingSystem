@@ -6,9 +6,11 @@ class Check
     double getSum() const;
     const MyString &getCode() const;
     const MyString &getUserId() const;
+    void serialise(std::ostream &os) const;
 
     Check(const MyString &sender, double sum, const MyString &verificationCode, const MyString &userId);
     Check() = default;
+    Check(std::istream &is);
 
   private:
     MyString sender;

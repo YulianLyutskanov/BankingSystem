@@ -11,10 +11,20 @@ void Employee::addTask(Command *task)
     commands.push_back(Polymorphic_Ptr<Command>(task));
 }
 
+const MyString& Employee::getAssociatedBank() const
+{
+    return bankAssociated;
+}
+
 Employee::Employee(const MyString &name, const MyString &id, unsigned short age, const MyString &password,
                    const MyString &bankAssociated)
     : User(name, id, age, password), bankAssociated(bankAssociated)
 {
+}
+
+Employee::Employee(std::istream &is)
+{
+    is >> name >> id >> age >> password >> bankAssociated;
 }
 
 void Employee::exit() const
@@ -30,6 +40,12 @@ void Employee::help() const
     std::cout << "disapprove [task_id] [message]" << std::endl;
     std::cout << "whoami - Display your information" << std::endl;
     std::cout << "exit - logout" << std::endl;
+}
+
+void Employee::serialise(std::ostream &os) const
+{
+    os << name << '\n' << id << '\n' << age << '\n' << password << '\n';
+    os << bankAssociated << '\n'; // comands later
 }
 
 UserType Employee::getType() const

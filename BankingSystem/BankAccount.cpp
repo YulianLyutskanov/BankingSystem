@@ -1,7 +1,16 @@
 #include "BankAccount.h"
+#include "System.h"
 
 BankAccount::BankAccount(unsigned id, double balance, SharedPtr<User> user) : id(id), balance(balance), user(user)
 {
+}
+
+BankAccount::BankAccount(std::istream &is)
+{
+    is >> id >> balance;
+    MyString ownerID;
+    is >> ownerID;
+    user = System::getInstance().getUser(ownerID);
 }
 
 unsigned BankAccount::getId() const
@@ -44,4 +53,9 @@ void BankAccount::setUser(User *newUser)
 void BankAccount::print() const
 {
     std::cout << "Account number: " << id << std::endl << "Balance: " << balance << '$' << std::endl;
+}
+
+void BankAccount::serialise(std::ostream &os) const
+{
+    os << id << ' ' << balance << ' ' << user->getId();
 }

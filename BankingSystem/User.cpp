@@ -70,7 +70,7 @@ User::User(const MyString &name, const MyString &id, unsigned short age, const M
 {
 }
 
-const MyString& User::getPassword() const
+const MyString &User::getPassword() const
 {
     return password;
 }
