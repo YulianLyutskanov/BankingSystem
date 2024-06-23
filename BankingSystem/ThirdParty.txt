@@ -1,5 +1,1 @@
-1
-Plamena
-0xxxxxxxx3
-19
-*
+0
