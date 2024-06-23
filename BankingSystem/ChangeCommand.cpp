@@ -1,5 +1,6 @@
 #include "Commands/ChangeCommand.h"
 #include "IdGenerator.h"
+#include "System.h"
 #pragma warning(disable : 4996)
 
 ChangeCommand::ChangeCommand(const SharedPtr<User> &accountHolder, const MyString &destinationBank,

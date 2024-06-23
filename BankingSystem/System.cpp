@@ -2,6 +2,7 @@
 #include "Commands/ChangeCommand.h"
 #include "Commands/CloseCommand.h"
 #include "Commands/OpenCommand.h"
+#include "Users/Client.h"
 #include "Users/Employee.h"
 #include "Users/ThirdParty.h"
 
@@ -90,6 +91,17 @@ const Check &System::findCheck(const MyString &code)
     throw std::logic_error("no such a check!");
 }
 
+bool System::clientWithNameExists(const MyString &name)
+{
+    size_t count = users.size();
+    for (size_t i = 0; i < count; i++)
+    {
+        if (users[i]->getName() == name)
+            return true;
+    }
+    return false;
+}
+
 void System::extractCheck(const MyString &code)
 {
     size_t count = checks.size();
@@ -139,6 +151,8 @@ void System::singUp()
     unsigned age = 0;
     std::cout << "Name: ";
     std::cin >> name;
+    if (clientWithNameExists(name))
+        throw std::logic_error("username already taken");
     std::cout << std::endl << "EGN: ";
     std::cin >> id;
 

@@ -16,10 +16,6 @@ class BankAccount
     void add(double money);
     void setUser(User *newUser);
     void print() const;
-    //~BankAccount()
-    //{
-    //    std::cout << "deleted bankAccount" << std::endl;
-    //}
 
   private:
     unsigned id = 0;

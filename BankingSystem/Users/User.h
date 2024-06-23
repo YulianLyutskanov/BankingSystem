@@ -1,9 +1,7 @@
 #pragma once
-// #include "../System.h"
 #include "Containers/MyVector.hpp"
 #include "MyString.h"
 #include <iostream>
-// class System;
 
 enum class UserType
 {
@@ -39,9 +37,6 @@ class User
 
     User(const MyString &name, const MyString &id, unsigned short age, const MyString &password);
     virtual ~User() = default;
-    //{
-    //    std::cout << "delted user " << getName() << std::endl;
-    //}
     virtual UserType getType() const = 0;
 
   protected:

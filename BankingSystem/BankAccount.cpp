@@ -21,7 +21,6 @@ const SharedPtr<User> &BankAccount::getUser() const
 
 void BankAccount::setId(unsigned newId)
 {
-    // check if its free
     id = newId;
 }
 

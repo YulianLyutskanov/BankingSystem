@@ -1,7 +1,6 @@
 #pragma once
 #include "BankAccount.h"
 #include "Containers/MyVector.hpp"
-// #include "Users/Employee.h"
 #include "Users/User.h"
 class Employee;
 class Bank
@@ -18,10 +17,6 @@ class Bank
     const BankAccount &extractAccount(unsigned id);
     const MyVector<BankAccount> &getAccounts() const;
     void addEmployee(const SharedPtr<Employee> &em);
-    //~Bank()
-    //{
-    //    std::cout << "deleted bank " << name << std::endl;
-    //}
 
   private:
     MyString name;

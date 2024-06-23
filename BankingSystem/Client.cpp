@@ -1,4 +1,5 @@
 #include "Users/Client.h"
+#include "System.h"
 
 void Client::exit() const
 {

@@ -1,5 +1,6 @@
 #include "Commands/OpenCommand.h"
 #include "IdGenerator.h"
+#include "System.h"
 
 #pragma warning(disable : 4996)
 

@@ -3,10 +3,7 @@
 #include "Check.h"
 #include "Containers/MyVector.hpp"
 #include "MyString.h"
-#include "SmartPointers/Polymorfic_Ptr.hpp"
 #include "SmartPointers/SharedPtr.hpp"
-#include "Users/Client.h"
-// #include "Users/Employee.h"
 #include "Users/User.h"
 
 class System
@@ -31,6 +28,7 @@ class System
     bool isSomeoneLogged() const;
     void addCheck(const Check &check);
     const Check &findCheck(const MyString &code);
+    bool clientWithNameExists(const MyString &name);
 
     void run();
 

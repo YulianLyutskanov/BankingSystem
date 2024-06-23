@@ -3,7 +3,6 @@
 #include "../Users/User.h"
 #include "Command.h"
 
-
 class OpenCommand : public Command
 {
   public:

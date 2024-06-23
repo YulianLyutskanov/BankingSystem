@@ -1,4 +1,5 @@
 #include "Commands/CloseCommand.h"
+#include "System.h"
 #pragma warning(disable : 4996)
 
 CloseCommand::CloseCommand(const SharedPtr<User> &accountHolder, const MyString &bankName, unsigned accountId)
