@@ -2,6 +2,7 @@
 #include "Commands/ChangeCommand.h"
 #include "Commands/CloseCommand.h"
 #include "Commands/OpenCommand.h"
+#include "IdGenerator.h"
 #include "Users/Client.h"
 #include "Users/Employee.h"
 #include "Users/ThirdParty.h"
@@ -219,6 +220,15 @@ void System::serialise() const
     serialiseUsers();
     serialiseChecks();
     serialiseBanks();
+
+    std::ofstream lastID("LastId.txt");
+
+    if (!lastID.is_open())
+        throw std::runtime_error("cant save lastId!");
+
+    lastID << IdGenerator::getInstance().getUniqueId();
+
+    lastID.close();
 }
 
 void System::loadUsers()
@@ -304,6 +314,14 @@ void System::loadSystem()
     loadUsers();
     loadChecks();
     // loadBanks();
+    std::ifstream ifs("LastId.txt");
+
+    if (!ifs.is_open())
+        throw std::runtime_error("cant load lastID");
+
+    unsigned lastId;
+    ifs >> lastId;
+    IdGenerator::getInstance().setStartingId(lastId);
 }
 
 System::System()
