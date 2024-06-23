@@ -19,6 +19,10 @@ class Client : public User
     // void change(const MyString &newBankName, const MyString &currentBankName, unsigned accountNumber) const;
     void list(const MyString &bankName) const;
     Client(const MyString &name, const MyString &id, unsigned short age, const MyString &password);
+    //~Client()
+    //{
+    //    std::cout << "client deleted " << getName() << std::endl;
+    //}
 
   private:
 };

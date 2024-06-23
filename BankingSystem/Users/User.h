@@ -21,7 +21,6 @@ class User
     virtual void whoami() const;
     virtual void help() const = 0;
 
-
     void display() const;
 
     virtual void printMessages() const;
@@ -40,6 +39,9 @@ class User
 
     User(const MyString &name, const MyString &id, unsigned short age, const MyString &password);
     virtual ~User() = default;
+    //{
+    //    std::cout << "delted user " << getName() << std::endl;
+    //}
     virtual UserType getType() const = 0;
 
   protected:

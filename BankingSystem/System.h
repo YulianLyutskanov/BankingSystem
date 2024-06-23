@@ -26,11 +26,11 @@ class System
     void addUser(User *user);
 
     Bank &getBank(const MyString &name);
+    bool bankExists(const MyString &name);
     SharedPtr<User> &getUser(const MyString &id);
     bool isSomeoneLogged() const;
     void addCheck(const Check &check);
     const Check &findCheck(const MyString &code);
-    void extractCheck(const MyString &code);
 
     void run();
 
@@ -41,5 +41,16 @@ class System
     SharedPtr<User> loggedUser = nullptr;
 
     void changeLogged(SharedPtr<User> toLog);
+    void extractCheck(const MyString &code);
+    void singUp();
+    void login();
+    void clientInterface(const MyString &input);
+    void employeeInterface(const MyString &input);
+    void thirdPartyInterface(const MyString &input);
+    bool commonUserInterface(const MyString &input);
+    bool manageCommand(const MyString &input);
+
+    bool isClientIdUnique(const MyString &input);
+
     System() = default;
 };

@@ -45,7 +45,7 @@ SharedPtr<Employee> &Bank::getEmployeeWithLeastTasks() const
     size_t count = employees.size();
 
     if (!count)
-        throw std::runtime_error("no employees");
+        throw std::runtime_error("no employees in that bank, can't procces this task");
 
     SharedPtr<Employee> res = employees[0];
     for (size_t i = 0; i < count; i++)

@@ -56,17 +56,24 @@ void Employee::tasks() const
 
 void Employee::view(unsigned taskId) const
 {
+    if (taskId >= commands.size())
+        throw std::invalid_argument("no task with that index");
     commands[taskId]->details();
 }
 
 void Employee::approve(unsigned taskId)
 {
+
+    if (taskId >= commands.size())
+        throw std::invalid_argument("no task with that index");
     commands[taskId]->execute();
     commands.erase(taskId);
 }
 
 void Employee::disapprove(unsigned taskId)
 {
+    if (taskId >= commands.size())
+        throw std::invalid_argument("no task with that index");
     commands[taskId]->cancel();
     commands.erase(taskId);
 }

@@ -24,10 +24,10 @@ class Employee : public User
 
     Employee(const MyString &name, const MyString &id, unsigned short age, const MyString &password,
              const MyString &bankAssociated);
-    ~Employee()
-    {
-        std::cout << "deleted Employee " << getName() << std::endl;
-    }
+    //~Employee()
+    //{
+    //    std::cout << "deleted Employee " << getName() << std::endl;
+    //}
 
   private:
     const MyString bankAssociated;

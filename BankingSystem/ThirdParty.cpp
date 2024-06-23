@@ -25,6 +25,7 @@ ThirdParty::ThirdParty(const MyString &name, const MyString &id, unsigned short 
 
 void ThirdParty::send_check(double sum, const MyString &verificationCode, const MyString &userId) const
 {
-    System::getInstance().addCheck(Check(getName(), sum, verificationCode, userId));
+
     System::getInstance().getUser(userId)->addMessage("You have a check assigned to you by " + getName());
+    System::getInstance().addCheck(Check(getName(), sum, verificationCode, userId));
 }
