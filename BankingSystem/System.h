@@ -6,7 +6,6 @@
 #include "SmartPointers/SharedPtr.hpp"
 #include "Users/User.h"
 
-
 class System
 {
     friend class User;
