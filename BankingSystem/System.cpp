@@ -363,7 +363,7 @@ void System::singUp()
     {
         std::cout << std::endl << "Password: ";
         std::cin >> password;
-        newUser = new Client(name, id, age, password);
+        newUser = SharedPtr<User>(new Client(name, id, age, password));
     }
     else if (role == "Employee")
     {
@@ -376,7 +376,7 @@ void System::singUp()
 
         std::cout << std::endl << "Password: ";
         std::cin >> password;
-        newUser = new Employee(name, id, age, password, bank);
+        newUser = SharedPtr<User>(new Employee(name, id, age, password, bank));
         SharedPtr<Employee> employee(dynamicCast<Employee, User>(newUser));
         getBank(bank).addEmployee(employee);
     }

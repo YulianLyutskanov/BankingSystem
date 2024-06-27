@@ -61,7 +61,7 @@ template <typename T> class SharedPtr
 
     ~SharedPtr();
 
-    template <typename to, typename from> friend to *dynamicCast(SharedPtr<from> ptr);
+    template <typename to, typename from> friend SharedPtr<to> dynamicCast(SharedPtr<from> ptr);
 };
 
 template <typename T> void SharedPtr<T>::free()
@@ -186,8 +186,11 @@ template <typename T> bool SharedPtr<T>::isInitlized() const
     return data != nullptr;
 }
 
-template <typename to, typename from> to *dynamicCast(SharedPtr<from> ptr)
+template <typename to, typename from> SharedPtr<to> dynamicCast(SharedPtr<from> ptr)
 {
-    ptr.counter->addSharedPtr();
-    return (dynamic_cast<to *>(ptr.data));
+    SharedPtr<to> res;
+    res.data = dynamic_cast<to *>(ptr.data);
+    res.counter = ptr.counter;
+    res.counter->addSharedPtr();
+    return res;
 }
