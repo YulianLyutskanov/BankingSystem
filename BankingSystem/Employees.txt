@@ -1,1 +1,11 @@
-0
+2
+ti
+ti
+1
+*
+banka
+ivan
+ivan
+1
+*
+banka2

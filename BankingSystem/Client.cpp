@@ -47,6 +47,10 @@ void Client::redeem(const MyString &bankName, unsigned accountNumber, const MySt
         System::getInstance().getBank(bankName).getBankAccount(accountNumber).add(c.getSum());
         System::getInstance().extractCheck(verificationCode);
     }
+    else
+    {
+        throw std::logic_error("this check is not for you!");
+    }
 }
 
 void Client::list(const MyString &bankName) const

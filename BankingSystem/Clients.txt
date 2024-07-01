@@ -1,1 +1,15 @@
-0
+2
+az
+1a2s3d4f
+10
+*
+2
+You opened an account in banka!Your account id is 101
+You have a check assigned to you by toi
+nego
+nego
+3
+*
+2
+You opened an account in banka2!Your account id is 103
+You have a check assigned to you by toi
